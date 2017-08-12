@@ -1,15 +1,15 @@
 import sys
 import os
+import datetime
 # from os.path import join, getsize
 import shutil
 import logging
 
 
-class FileManager:
+class Filemanager(object):
     """Filemanager Class"""
     sourcePath = "C:\TestFileshare"
     # sourcePath = "/media/daten/downloads/complete"
-    # destinationPath
     extension = ".mkv"
 
     def main(self):
@@ -19,6 +19,7 @@ class FileManager:
              , category, group, postprocstatus, url) = sys.argv
             print(scriptname, directory, orgnzbname, jobname, reportnumber
                   , category, group, postprocstatus, url)
+            destinationPath = self._evaluateDestinationPath(category)
 
         except:
             print("No commandline parameters found")
@@ -26,36 +27,43 @@ class FileManager:
 
         #    sys.exit(1)
         # continue script
-
-        destinationPath = self.__evaluateDestinationPath()
-
-        # Iterate through all files in all subfolders of root incl. root
+        counter = 0
         for root, dirs, files in os.walk(self.sourcePath):
             for file in files:
                 if (file.endswith(self.extension)):
                     print(os.path.join(root, file))
-                    self.__copyFile(file, destinationPath)
-
-                    # print(root, "consumes", end = "")
-                    # print(sum([os.path.getsize(os.path.join(root, name)) for name in
-                    # files]), end="")
-                    # print("bytes in", len(files), "non-directory files")
-                    # if 'CVS' in dirs:
-                    #    dirs.remove('CVS') # don't visit CVS directories
-                    # Your code goes here
-
+                    # self._copyFile(file, destinationPath)
+                    counter += 1
+        print(str(counter) + " files have been moved")
         # Success code
         # sys.exit(0)
         return
 
-    def __copyFile(self, filePath, destinationPath):
+    def _copyFile(self, filePath, destinationPath):
         """Copy Files from source to destination"""
         pass
 
-    def __evaluateDestinationPath(self):
-        """Gets the Destination path depending on the type of the movie
-            and the actual year of the download"""
+    def _evaluateDestinationPath(self, category):
+        """Gets the Destination path depending on the type of the movie and the actual year of the download"""
+        if category == "movie":
+            catPath = "filme\\" + datetime.datetime.now().year.__str__()
+        # if category == "tv":
+        #     raise Exception("Category not Supported")
+        else:
+            raise Exception("Category not Supported")
+        evalPath = "C:\\TestFileshare\\Destination\\" + catPath + "\\"
+        print(evalPath)
+        return evalPath
         pass
 
-    if __name__ == '__main__':
-        main()
+
+if __name__ == '__main__':
+    Filemanager().main()
+
+
+    # print(root, "consumes", end = "")
+    # print(sum([os.path.getsize(os.path.join(root, name)) for name in
+    # files]), end="")
+    # print("bytes in", len(files), "non-directory files")
+    # if 'CVS' in dirs:
+    #    dirs.remove('CVS') # don't visit CVS directories
