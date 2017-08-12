@@ -13,12 +13,11 @@ class Filemanager(object):
     extension = ".mkv"
 
     def main(self):
+        print("Trying to move Files in Path \"" + self.sourcePath + "\" with extension \"" + self.extension + "\"")
         try:
             # print(sys.argv)
-            (scriptname, directory, orgnzbname, jobname, reportnumber
-             , category, group, postprocstatus, url) = sys.argv
-            print(scriptname, directory, orgnzbname, jobname, reportnumber
-                  , category, group, postprocstatus, url)
+            (scriptname, directory, orgnzbname, jobname, reportnumber, category, group, postprocstatus, url) = sys.argv
+            print(scriptname, directory, orgnzbname, jobname, reportnumber, category, group, postprocstatus, url)
             destinationPath = self._evaluateDestinationPath(category)
 
         except:
@@ -30,7 +29,7 @@ class Filemanager(object):
         counter = 0
         for root, dirs, files in os.walk(self.sourcePath):
             for file in files:
-                if (file.endswith(self.extension)):
+                if file.endswith(self.extension):
                     print(os.path.join(root, file))
                     # self._copyFile(file, destinationPath)
                     counter += 1
@@ -39,21 +38,25 @@ class Filemanager(object):
         # sys.exit(0)
         return
 
-    def _copyFile(self, filePath, destinationPath):
-        """Copy Files from source to destination"""
-        pass
-
     def _evaluateDestinationPath(self, category):
         """Gets the Destination path depending on the type of the movie and the actual year of the download"""
         if category == "movie":
             catPath = "filme\\" + datetime.datetime.now().year.__str__()
+            # catPath = "filme/" + datetime.datetime.now().year.__str__()
         # if category == "tv":
         #     raise Exception("Category not Supported")
         else:
             raise Exception("Category not Supported")
         evalPath = "C:\\TestFileshare\\Destination\\" + catPath + "\\"
-        print(evalPath)
+        # evalPath = "/media/daten/tv/" + catPath
+        print("Destination-Path: \"" + evalPath + "\"")
         return evalPath
+        pass
+
+    def _copyFile(self, file, destinationPath):
+        """Copy Files from source to destination"""
+        shutil.copy(file, destinationPath)
+
         pass
 
 
