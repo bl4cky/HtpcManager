@@ -29,7 +29,7 @@ class Filemanager(object):
         counter = 0
         for root, dirs, files in os.walk(self.sourcePath):
             for file in files:
-                if file.endswith(self.extension):
+                if file.endswith(self.extension) and not file.upper().__contains__("SAMPLE"):
                     print(os.path.join(root, file))
                     # self._copyFile(file, destinationPath)
                     counter += 1
