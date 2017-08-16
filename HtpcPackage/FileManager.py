@@ -8,8 +8,8 @@ import logging
 
 class Filemanager(object):
     """Filemanager Class"""
-    sourcePath = "C:\TestFileshare"
-    # sourcePath = "/media/daten/downloads/complete"
+    # sourcePath = "C:\TestFileshare"
+    sourcePath = "/media/daten/downloads/complete"
     extension = ".mkv"
 
     def main(self):
@@ -41,14 +41,14 @@ class Filemanager(object):
     def _evaluateDestinationPath(self, category):
         """Gets the Destination path depending on the type of the movie and the actual year of the download"""
         if category == "movie":
-            catPath = "filme\\" + datetime.datetime.now().year.__str__()
-            # catPath = "filme/" + datetime.datetime.now().year.__str__()
+            # catPath = "filme\\" + datetime.datetime.now().year.__str__()
+            catPath = "filme/" + datetime.datetime.now().year.__str__()
         # if category == "tv":
         #     raise Exception("Category not Supported")
         else:
             raise Exception("Category not Supported")
-        evalPath = "C:\\TestFileshare\\Destination\\" + catPath + "\\"
-        # evalPath = "/media/daten/tv/" + catPath
+        # evalPath = "C:\\TestFileshare\\Destination\\" + catPath + "\\"
+        evalPath = "/media/daten/tv/" + catPath
         print("Destination-Path: \"" + evalPath + "\"")
         return evalPath
         pass
